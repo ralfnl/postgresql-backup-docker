@@ -3,16 +3,15 @@
 
 Backup all PostgresSQL databases on a specific server to the local filesystem. The container does this periodically and with backup rotation built in.
 
-Build/publish image
-===
+## Build/publish image
+
 ```shell
 docker build -t {repository}/{image} . --force-rm --no-cache
 docker login --username username --password password
 docker push {repository}/{image}
 ```
 ---
-Usage
-===
+## Usage
 
 ### Docker CLI
 ```sh
@@ -50,8 +49,7 @@ services:
             - BACKUP_KEEP_MONTHS=6
 ```
 ---
-Making backups
-===
+## Making backups
 
 ### Manual backup
 By default the script makes backups based on the schedule. You can trigger a manual backup by running the `/backup.sh` command.
@@ -71,8 +69,7 @@ Folders daily, weekly and monthly are created and populated using hard links to 
 
 ---
 
-Restoring a backup
-===
+## Restoring a backup
 
 ### List backups
 
