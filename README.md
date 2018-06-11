@@ -43,6 +43,11 @@ services:
             - POSTGRES_USER=username
             - POSTGRES_PASSWORD=password
             - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
+            - RSYNC_HOST=rsync_host
+            - RSYNC_FOLDER=/path/to/external/folder/
+            - RSYNC_OPTIONS=--dry-run --delete -azv
+            - RSYNC_USER=username
+            - RSYNC_PASSWORD=password
             - SCHEDULE=@daily
             - BACKUP_KEEP_DAYS=7
             - BACKUP_KEEP_WEEKS=4

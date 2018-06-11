@@ -71,4 +71,13 @@ while read f;
     find "$BACKUP_DIR/monthly" -maxdepth 1 -mtime +$KEEP_MONTHS -name "$f-*.sql*" -exec rm -rf '{}' ';'
 done;
 
+################################################################################
+# Rsync backups to RSYNC_HOST if defined
+
+if [ "${RSYNC_HOST}" != "**None**" ]; then
+  echo "Perform rsync to ${RSYNC_HOST}";
+  ssh-keyscan ${RSYNC_HOST} >> ~/.ssh/known_hosts;
+  sshpass -p ${RSYNC_PASSWORD} rsync ${RSYNC_OPTIONS} ${BACKUP_DIR}/ ${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_FOLDER};
+fi
+
 echo "SQL backup successful"
