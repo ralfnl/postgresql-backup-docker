@@ -44,8 +44,10 @@ services:
             - POSTGRES_PASSWORD=password
             - POSTGRES_EXTRA_OPTS=-Z9 --schema=public --blobs
             - RSYNC_HOST=rsync_host
+            - RSYNC_PORT=22
             - RSYNC_FOLDER=/path/to/external/folder/
-            - RSYNC_OPTIONS=--dry-run --delete -azv
+            - RSYNC_OPTIONS=--dry-run -azv
+            - RSYNC_ROTATE=yes
             - RSYNC_USER=username
             - RSYNC_PASSWORD=password
             - SCHEDULE=@daily

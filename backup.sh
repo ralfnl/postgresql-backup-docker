@@ -78,6 +78,15 @@ if [ "${RSYNC_HOST}" != "**None**" ]; then
   echo "Perform rsync to ${RSYNC_HOST}";
   ssh-keyscan ${RSYNC_HOST} >> ~/.ssh/known_hosts;
   sshpass -p ${RSYNC_PASSWORD} rsync ${RSYNC_OPTIONS} ${BACKUP_DIR}/ ${RSYNC_USER}@${RSYNC_HOST}:${RSYNC_FOLDER};
+
+  if [ "${RSYNC_ROTATE}" = "yes" ]; then
+    echo "Delete old remote files from ${RSYNC_HOST}";
+   
+    # Remove external old files
+    sshpass -p ${RSYNC_PASSWORD} ssh -p ${RSYNC_PORT} ${RSYNC_USER}@${RSYNC_HOST} find "$RSYNC_FOLDER/daily" -maxdepth 1 -mtime +$KEEP_DAYS -name "*.sql*" -delete
+    sshpass -p ${RSYNC_PASSWORD} ssh -p ${RSYNC_PORT} ${RSYNC_USER}@${RSYNC_HOST} find "$RSYNC_FOLDER/weekly" -maxdepth 1 -mtime +$KEEP_WEEKS -name "*.sql*" -delete
+    sshpass -p ${RSYNC_PASSWORD} ssh -p ${RSYNC_PORT} ${RSYNC_USER}@${RSYNC_HOST} find "$RSYNC_FOLDER/monthly" -maxdepth 1 -mtime +$KEEP_MONTHS -name "*.sql*" -delete
+  fi
 fi
 
 echo "SQL backup successful"
